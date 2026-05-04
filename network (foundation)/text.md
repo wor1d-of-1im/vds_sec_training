@@ -37,6 +37,7 @@ Trong Internet có các server:
 - DNS Server
 - Web Server
 - Database Server
+
 ### 2. Mô hình thiết kế mạng
 #### 2.1. Mô hình đơn giản (không xác thực)
 
@@ -55,7 +56,8 @@ Chức năng:
 - Router: định tuyến
 - Switch: kết nối nội bộ
 - Access Point: phát Wi-Fi
-2.2. Mô hình có xác thực
+
+#### 2.2. Mô hình có xác thực
 
 Cấu trúc:
 Internet → Firewall → Core Switch
@@ -71,10 +73,11 @@ Cách hoạt động:
 - Nhập tài khoản
 - RADIUS kiểm tra
 - Cho phép hoặc từ chối truy cập
+
 ### 3. Các giao thức mạng phổ biến
 #### 3.1. ARP (Address Resolution Protocol)
-Chuyển đổi địa chỉ IP → MAC
-Hoạt động bằng broadcast trong mạng LAN
+- Chuyển đổi địa chỉ IP → MAC
+- Hoạt động bằng broadcast trong mạng LAN
 #### 3.2. DHCP (Dynamic Host Configuration Protocol)
 Cấp phát IP tự động
 Cung cấp:
@@ -83,20 +86,40 @@ Cung cấp:
 - Gateway
 - DNS
 #### 3.3. Telnet / SSH
-Điều khiển thiết bị từ xa
-Telnet: không mã hóa
-SSH: có mã hóa, an toàn hơn
+- Điều khiển thiết bị từ xa
+- Telnet: không mã hóa
+- SSH: có mã hóa, an toàn hơn
 #### 3.4. DNS / HTTP
-DNS: chuyển tên miền → IP
-HTTP: truyền dữ liệu web
+- DNS: chuyển tên miền → IP
+- HTTP: truyền dữ liệu web
+
 ### 4. Giao thức ARP (chi tiết)
 #### 4.1. Reverse ARP (RARP)
-Tìm IP dựa trên MAC
-Dùng cho thiết bị chưa có IP
+- Tìm IP dựa trên MAC
+- Dùng cho thiết bị chưa có IP
 #### 4.2. Inverse ARP
 Tìm IP từ thông tin kết nối (WAN)
 #### 4.3. Cách ARP hoạt động
-Thiết bị gửi yêu cầu tìm MAC từ IP
-Broadcast trong mạng
-Thiết bị đích phản hồi MAC
-Lưu vào bảng ARP
+- Thiết bị gửi yêu cầu tìm MAC từ IP
+- Broadcast trong mạng
+- Thiết bị đích phản hồi MAC
+- Lưu vào bảng ARP
+
+### 5. Giao thức DHCP
+#### 5.1. DHCP
+- Giao thức cấp phát IP tự động
+- Giúp thiết bị tham gia mạng mà không cần thiết lập thủ công
+- Mô hình hoạt động: Client-Server
+
+#### 5.2. Thông tin mà DHCP cung cấp
+- IP address
+- Subnet mask
+- Default gateway
+- DNS server
+- Ngoài ra còn có thể có: lease time, domain, NTP,…
+
+#### 5.3. Cách DHCP hoạt động (DORA)
+- Discover: Client send broadcast → tìm DHCP Server
+- Offer: Server gửi đề nghị cấp IP
+- Request: Client chọn một offer và yêu cầu IP đó
+- Acknowledgement (ACK): Server xác nhận và cấp IP chính thức
