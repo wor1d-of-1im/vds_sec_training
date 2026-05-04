@@ -103,7 +103,6 @@ Trích xuất toàn bộ nội dung bảng (username và password).
 Đăng nhập với tài khoản administrator để hoàn thành lab.
 
 Điều kiện thành công: Truy xuất được thông tin xác thực và đăng nhập thành công với tài khoản administrator.
-![alt text](image.png)
 
  Note:
  - Oracle yêu cầu mọi truy vấn SELECT phải có mệnh đề FROM chỉ định bảng dữ liệu.
@@ -120,7 +119,6 @@ Pets'UNION SELECT NULL,NULL FROM dual-- -
 ```
 ![alt text](images/sqli_lab_06/lab06.02.png)
 
-Và bài này chúng ta sẽ không thể truy cập vào trong database infomation_schema nữa 
 ![alt text](images/sqli_lab_06/lab06.03.png)
 
 Chúng ta sẽ chuyển sang sử dụng database của Oracle là: all_tables
@@ -246,8 +244,8 @@ Mục tiêu: Thực hiện UNION attack để lấy toàn bộ username và pass
 
 Kiểm tra hệ thống dùng ```'``` hay ```"```
 Dùng ```ORDER BY``` để xác định số cột
-![!\[alt text\](image.png)](<images/sqli_lab_10/lab 10.02.png>)
-Sau khi test ta thấy query dùng dấu ```'```
+![alt text](images/sqli_lab_10/lab10.02.png)
+Sau khi test ta thấy query dùng dấu ```'```.
 Khi dùng ```ORDER BY 2``` mà trả về ```200 OK``` → suy ra có 2 cột.
 
 Payload:
@@ -328,6 +326,6 @@ Và chúng ta nhận được kết quả như sau :
 x2oixj3q5v72c6knt5it
 ![!\[alt text\](image.png)](images/sqli_lab_11/lab11.11.png)
 
-### Blind SQL injection with out-of-band data exfiltration
+## Blind SQL injection with out-of-band data exfiltration
 
 ## Visible error-based SQL injection
