@@ -24,6 +24,7 @@ Cấu trúc:
 - Nhiều mạng (City, Campus, Enterprise, Government)
 - Kết nối thông qua ISP
 - ISP tạo thành mạng WAN trung gian
+
 #### 1.3. Mạng Internet
 
 Lý thuyết:
@@ -123,3 +124,13 @@ Tìm IP từ thông tin kết nối (WAN)
 - Offer: Server gửi đề nghị cấp IP
 - Request: Client chọn một offer và yêu cầu IP đó
 - Acknowledgement (ACK): Server xác nhận và cấp IP chính thức
+
+#### 5.4. DHCP Lease
+- IP được cấp có thời hạn
+- Hết hạn: gia hạn IP hoặc cấp địa chỉ IP
+#### 5.5. Các kiểu cấp phát IP
+- Dynamic allocation: Cấp IP tự động và có thay đổi theo thời gian
+- Automatic allocation: Cấp IP và giữ luôn cho client
+- Manual (Static DHCP): Gán IP cố định dựa trên MAC
+#### 5.6. Giao thức
+Sử dụng UDP port 67 và 68, tượng trưng cho Server-Client
