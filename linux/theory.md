@@ -1,0 +1,6 @@
+- component
+- envs
+- ownership and permission
+- shebang
+- conditions
+- regex
