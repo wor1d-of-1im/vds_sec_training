@@ -3,7 +3,7 @@
    * Command line interface(CLI): cho phép người dùng trực tiếp thao tác lệnh (commands) trên terminal, tương tác trực tiếp với hệ điều hành (Operator System)
 
    * Graphical User Interface(GUI): cho phép người dùng sử dụng giao diện đồ họa để tương tác với hệ điều hành, đồng thời trên giao diện có nhiều menu để đơn giản hóa thao tác.
-* envs
+* envs (Environment Variables (biến môi trường)): là các biến được hệ điều hành lưu trữ nhằm cung cấp thông tin cấu hình cho chương trình và tiến trình (process). Ví dụ như PATH, HOME, USER, giúp chương trình biết nơi tìm executable hoặc thư mục người dùng.
 * ownership and permission
    * ownership
       * user: tức người tạo ra file tức là chủ của file (owner)
@@ -15,5 +15,5 @@
       * execute (x or 1): cho phép chạy/thực thi chương trình.
 * shebang
     * Không phải comment, nằm ở dòng đầu của script, nhằm thông báo cho OS về trình thông dịch (interpreter) được sử dụng
-* conditions
-* regex
+* conditions: được sử dụng để kiểm tra điều kiện đúng/sai trong script hoặc chương trình, từ đó quyết định luồng thực thi.
+* regex (Regular Expression): là biểu thức chính quy dùng để tìm kiếm, kiểm tra hoặc xử lý chuỗi văn bản theo mẫu (pattern); regex thường được dùng trong tìm kiếm dữ liệu, validate input và filtering text.
