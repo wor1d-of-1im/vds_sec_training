@@ -378,8 +378,6 @@ Network segmentation là việc phân tách mạng lớn thành nhiều mạng n
 | Dễ quản lý | Chia theo phòng ban |
 | Giảm lỗi lan rộng | Ổn định hệ thống |
 
----
-
 ### Ví dụ segmentation
 
 Một công ty gồm:
@@ -419,8 +417,7 @@ Network ban đầu:
 192.168.1.0/24
 ```
 
-Yêu cầu:
-- Chia thành 4 subnet
+Yêu cầu: Chia thành 4 subnet
 
 
 ### Bước 1: Mượn bit
@@ -475,17 +472,243 @@ Block size:
 ```
 
 Trong đó:
-- `n`: số bit mượn
-- `h`: số bit host còn lại
+* `n`: số bit mượn
+* `h`: số bit host còn lại
 
 Trừ 2 vì:
-- 1 network address
-- 1 broadcast address
+* 1 network address
+* 1 broadcast address
 #### 2.2.6. Subnet a /16 and /8 Prefix
-#### 2.2.7. Subnet to Meet Requirements
-#### 2.2.8. Variable Length Subnet Masking
-#### 2.2.9. Structured Design
+### Subnetting mạng /16
 
+Ví dụ:
+```
+172.16.0.0/16
+```
+
+Nếu chia thành `/24`:
+** Mượn thêm 8 bit
+- Có:
+```
+2^8 = 256 subnet
+```
+
+Mỗi subnet:
+```
+254 host
+```
+
+### Ví dụ subnet
+
+| Subnet | Host Range |
+|---|---|
+| 172.16.1.0/24 | .1 - .254 |
+| 172.16.2.0/24 | .1 - .254 |
+| 172.16.3.0/24 | .1 - .254 |
+
+### Subnetting mạng /8
+
+Ví dụ:
+```
+10.0.0.0/8
+```
+
+Host bits:
+```
+24 bit
+```
+
+Tổng host:
+```
+2^24 - 2
+```
+
+Kết quả:
+```
+16,777,214 host
+```
+
+Đây là mạng cực lớn bao gồm:
+* Enterprise
+* Data center
+* Cloud provider
+
+#### 2.2.7. Subnet to Meet Requirements
+Subnetting nên dựa trên nhu cầu thực tế.
+
+### Ví dụ yêu cầu
+
+| Department | Hosts Needed |
+|---|---|
+| IT | 100 |
+| HR | 50 |
+| Sales | 20 |
+
+### Chọn subnet phù hợp
+
+#### IT
+
+Cần:
+```
+100 host
+```
+
+Tính:
+```
+2^7 - 2 = 126
+```
+
+=> Chọn:
+```
+/25
+```
+
+#### HR
+
+Cần:
+```
+50 host
+```
+
+Tính:
+```
+2^6 - 2 = 62
+```
+
+=> Chọn:
+```
+/26
+```
+
+#### Sales
+
+Cần:
+```
+20 host
+```
+
+Tính:
+```
+2^5 - 2 = 30
+```
+
+=> Chọn:
+```
+/27
+```
+
+### Kết quả
+
+| Department | Prefix | Host Capacity |
+|---|---|---|
+| IT | /25 | 126 |
+| HR | /26 | 62 |
+| Sales | /27 | 30 |
+
+#### 2.2.8. Variable Length Subnet Masking
+Cho phép sử dụng subnet mask khác nhau trên từng subnet.
+
+### Ưu điểm của VLSM
+
+| Ưu điểm | Ý nghĩa |
+|---|---|
+| Tiết kiệm IP | Giảm lãng phí |
+| Linh hoạt | Phù hợp từng mạng |
+| Dễ mở rộng | Thiết kế hiệu quả |
+
+### Ví dụ VLSM
+
+Network:
+```
+192.168.1.0/24
+```
+
+Yêu cầu:
+* LAN1: 100 host
+* LAN2: 50 host
+* LAN3: 10 host
+
+### Chia subnet
+
+| LAN | Prefix | Host Capacity |
+|---|---|---|
+| LAN1 | /25 | 126 |
+| LAN2 | /26 | 62 |
+| LAN3 | /28 | 14 |
+
+### Nguyên tắc VLSM
+
+1. Chia subnet lớn nhất trước
+2. Chia subnet nhỏ hơn sau
+3. Không overlap địa chỉ
+
+Nếu overlap subnet:
+* Router sẽ định tuyến sai
+* Packet có thể bị drop
+#### 2.2.9. Structured Design
+Structured design là thiết kế mạng theo cấu trúc rõ ràng và dễ quản lý.
+
+### Mục tiêu
+
+| Mục tiêu | Ý nghĩa |
+|---|---|
+| Scalability | Dễ mở rộng |
+| Redundancy | Có dự phòng |
+| Performance | Hiệu suất cao |
+| Security | Bảo mật tốt |
+
+### Thiết kế phân tầng Cisco
+
+Cisco khuyến nghị mô hình:
+```
+Hierarchical Network Design
+```
+
+Gồm 3 lớp:
+
+| Layer | Chức năng |
+|---|---|
+| Access Layer | Kết nối end devices |
+| Distribution Layer | Routing và policy |
+| Core Layer | Backbone tốc độ cao |
+
+### Access Layer
+
+Kết nối:
+* PC
+* Printer
+* IP Phone
+* Access Point
+
+Thường dùng:
+* Layer 2 switch
+
+### Distribution Layer
+
+Xử lý:
+* Routing
+* ACL
+* QoS
+* VLAN
+
+Đây là lớp trung gian giữa access và core.
+
+### Core Layer
+
+Đặc điểm:
+* High speed
+* Low latency
+* High availability
+
+Core layer là xương sống của hệ thống mạng.
+
+### Nguyên tắc thiết kế tốt thường bao gồm:
+
+* Modular
+* Hierarchical
+* Fault tolerant
+* Easy management
+* Scalable
 ### 2.3. Basic Router Configuration
 #### 2.3.1. Configure Initial Router Settings
 #### 2.3.2. Configure Interfaces
@@ -498,5 +721,19 @@ Mục tiêu -> tìm hiểu về:
 * vì sao TCP chậm hơn UDP
 * port dùng để phân biệt dịch vụ
 * ứng dụng dùng network ra sao
+
 ### 3.1. Transport Layer
+#### 3.1.1. Transportation of Data
+#### 3.1.2. TCP Overview
+#### 3.1.3. UDP Overview
+#### 3.1.4. Port Numbers
+#### 3.1.5. TCP Communication Process
+#### 3.1.6. Reliability and Flow Control .
+#### 3.1.7. UDP Communication
+
 ### 3.2. Application Layer
+#### 3.2.1. Application, Presentation, and Session
+#### 3.2.2. Peer-to-Peer
+#### 3.2.3. Web and Email Protocols
+#### 3.2.4. IP Addressing Services
+#### 3.2.5. File Sharing Services
