@@ -1,6 +1,7 @@
 * component
-   * Command line interface(CLI): cho phép người dùng trực tiếp thao tác lệnh (commands) trên terminal, tương tác trực tiếp với hệ điều hành (Operator System)
 
+   * Command line interface(CLI): cho phép người dùng trực tiếp thao tác lệnh (commands) trên terminal, tương tác trực tiếp với hệ điều hành (Operator System)
+   
    * Graphical User Interface(GUI): cho phép người dùng sử dụng giao diện đồ họa để tương tác với hệ điều hành, đồng thời trên giao diện có nhiều menu để đơn giản hóa thao tác.
 * envs (Environment Variables (biến môi trường)): là các biến được hệ điều hành lưu trữ nhằm cung cấp thông tin cấu hình cho chương trình và tiến trình (process). Ví dụ như PATH, HOME, USER, giúp chương trình biết nơi tìm executable hoặc thư mục người dùng.
 * ownership and permission
@@ -13,5 +14,4 @@
       * write (w or 2): cho phép sửa đổi nội dung bao gồm thêm, xóa, đổi tên tập tin hoặc các tệp tin trong thư mục.
       * execute (x or 1): cho phép chạy/thực thi chương trình.
 * shebang: Không phải comment, nằm ở dòng đầu của script, nhằm thông báo cho OS về trình thông dịch (interpreter) được sử dụng
-
 * regex (Regular Expression): là biểu thức chính quy dùng để tìm kiếm, kiểm tra hoặc xử lý chuỗi văn bản theo mẫu (pattern); regex thường được dùng trong tìm kiếm dữ liệu, validate input và filtering text.

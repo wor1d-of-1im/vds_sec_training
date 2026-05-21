@@ -34,10 +34,9 @@ Hai lớp con của Data Link Layer:
   * Data (Payload): Nơi chứa dữ liệu thực tế. Nếu dữ liệu nhỏ hơn 46 bytes, các bit 0 (padding) sẽ được thêm vào để đạt độ dài tối thiểu.
   * Cyclic Redundancy Check (CRC) (4 Bytes): Chứa mã hash 32-bit dùng để phát hiện lỗi. Nếu mã hash bên nhận tính toán khác với mã gửi đi, dữ liệu được coi là đã bị lỗi.
 #### 1.2.2. Ethernet MAC Address
-Là địa chỉ vật lý được ISP gán cố định cho cổng mang Ethernet của thiết bị, giúp nhận diện & giao tiếp chính xác với nhau trong cùng một local area network (LAN).
-Định dạng: thường bao gồm 12 kí tự hex, chia thành 6 cặp, ngăn cách bởi dấu ```:``` hoặc dấu ```-```
-Tính duy nhất: Địa chỉ MAC cố định theo phần cứng.
-So sánh với địa chỉ IP: thay vì phụ thuộc vào vị trí mà mạng & thiết bị đang kết nối để định tuyến gói tin, MAC như "cột mốc" để các thiết bị tìm thấy nhau.
+* Là địa chỉ vật lý được ISP gán cố định cho cổng mang Ethernet của thiết bị, giúp nhận diện & giao tiếp chính xác với nhau trong cùng một local area network (LAN).
+* Định dạng: thường bao gồm 12 kí tự hex, chia thành 6 cặp, ngăn cách bởi dấu ```:``` hoặc dấu ```-```
+* Tính duy nhất: Địa chỉ MAC cố định theo phần cứng.
 
 #### 1.2.3. The MAC Address Table
 MAC Address Table (hay còn gọi là CAM Table) là bảng được switch sử dụng để lưu trữ địa chỉ MAC và cổng tương ứng của thiết bị. Bảng này giúp switch chuyển tiếp frame một cách hiệu quả trong mạng LAN.
@@ -723,17 +722,301 @@ Mục tiêu -> tìm hiểu về:
 * ứng dụng dùng network ra sao
 
 ### 3.1. Transport Layer
-#### 3.1.1. Transportation of Data
-#### 3.1.2. TCP Overview
-#### 3.1.3. UDP Overview
-#### 3.1.4. Port Numbers
-#### 3.1.5. TCP Communication Process
-#### 3.1.6. Reliability and Flow Control .
-#### 3.1.7. UDP Communication
+Transport Layer là tầng thứ 4 trong mô hình OSI và chịu trách nhiệm vận chuyển dữ liệu giữa các ứng dụng trên các thiết bị khác nhau. Tầng này đảm bảo dữ liệu được truyền đúng cách, đúng thứ tự và kiểm soát lỗi trong quá trình giao tiếp.
 
+Các giao thức chính:
+* TCP (Transmission Control Protocol)
+* UDP (User Datagram Protocol)
+#### 3.1.1. Transportation of Data
+Transport Layer thực hiện việc truyền dữ liệu giữa các tiến trình ứng dụng.
+
+#### Chức năng chính
+* Segmentation: Chia dữ liệu thành các phần nhỏ gọi là segment.
+* Reassembly: Ghép các segment lại thành dữ liệu hoàn chỉnh ở phía nhận.
+* Multiplexing: Cho phép nhiều ứng dụng sử dụng mạng cùng lúc.
+* Error Detection: Kiểm tra lỗi trong quá trình truyền.
+
+#### Quá trình truyền dữ liệu
+1. Ứng dụng tạo dữ liệu.
+2. Transport Layer chia dữ liệu thành segment.
+3. Segment được gửi xuống tầng Network.
+4. Thiết bị đích nhận và ghép lại dữ liệu.
+
+#### 3.1.2. TCP Overview
+TCP (Transmission Control Protocol) là giao thức hướng kết nối (connection-oriented), đảm bảo dữ liệu được truyền chính xác và đầy đủ.
+
+#### Đặc điểm của TCP
+* Reliable: Đảm bảo dữ liệu đến nơi.
+* Ordered: Dữ liệu đúng thứ tự.
+* Error Checking: Kiểm tra lỗi.
+* Flow Control: Điều khiển lưu lượng.
+* Connection-Oriented: Thiết lập kết nối trước khi truyền.
+
+#### Ứng dụng sử dụng TCP
+* HTTP/HTTPS
+* FTP
+* SMTP
+* SSH
+#### 3.1.3. UDP Overview
+UDP (User Datagram Protocol) là giao thức không hướng kết nối (connectionless).
+
+#### Đặc điểm của UDP
+* Không thiết lập kết nối.
+* Không đảm bảo dữ liệu đến nơi.
+* Tốc độ nhanh.
+* Overhead thấp.
+
+#### Ưu điểm
+* Độ trễ thấp.
+* Truyền dữ liệu nhanh.
+
+#### Nhược điểm
+* Có thể mất packet.
+* Không kiểm soát lỗi mạnh như TCP.
+
+#### Ứng dụng sử dụng UDP
+* Video Streaming
+* VoIP
+* DNS
+* Online Gaming
+#### 3.1.4. Port Numbers
+Port Number giúp xác định ứng dụng hoặc dịch vụ đang sử dụng dữ liệu mạng.
+
+#### Các loại Port
+
+| Loại Port | Khoảng giá trị | Mô tả |
+|---|---|---|
+| Well-known Ports | 0 - 1023 | Dịch vụ chuẩn |
+| Registered Ports | 1024 - 49151 | Ứng dụng đăng ký |
+| Dynamic/Ephemeral Ports | 49152 - 65535 | Port tạm thời |
+
+#### Một số Port phổ biến
+
+| Protocol | Port |
+|---|---|
+| HTTP | 80 |
+| HTTPS | 443 |
+| FTP | 21 |
+| SSH | 22 |
+| Telnet | 23 |
+| DNS | 53 |
+| SMTP | 25 |
+| DHCP | 67/68 |
+
+#### 3.1.5. TCP Communication Process
+TCP sử dụng cơ chế Three-Way Handshake để thiết lập kết nối.
+
+#### Quá trình bắt tay 3 bước
+
+##### Bước 1: SYN
+Client gửi gói SYN đến server:
+```
+SYN
+```
+
+##### Bước 2: SYN-ACK
+Server phản hồi:
+```
+SYN ACK
+```
+
+##### Bước 3: ACK
+Client gửi ACK:
+```
+ACK
+```
+
+Sau đó kết nối được thiết lập.
+
+#### Kết thúc kết nối
+TCP sử dụng:
+* FIN
+* ACK
+
+để đóng kết nối.
+#### 3.1.6. Reliability and Flow Control
+
+TCP đảm bảo độ tin cậy trong truyền dữ liệu.
+
+#### Reliability
+
+##### Sequence Number
+Đánh số các segment để đảm bảo đúng thứ tự.
+
+##### Acknowledgment
+Thiết bị nhận gửi ACK xác nhận đã nhận dữ liệu.
+
+##### Retransmission
+Nếu không nhận được ACK: dữ liệu sẽ được gửi lại.
+
+#### Flow Control
+
+TCP sử dụng Window Size để:
+- kiểm soát lượng dữ liệu truyền
+- tránh nghẽn mạng
+- tránh tràn buffer
+
+#### Congestion Control
+TCP giảm tốc độ truyền khi mạng quá tải.
+#### 3.1.7. UDP Communication
+UDP truyền dữ liệu mà không cần thiết lập kết nối.
+
+#### Đặc điểm giao tiếp UDP
+- Không handshake
+- Không ACK
+- Không retransmission
+
+#### Quá trình hoạt động
+1. Ứng dụng gửi datagram.
+2. Datagram được chuyển trực tiếp đến đích.
+3. Không kiểm tra trạng thái kết nối.
+
+#### Ưu điểm
+- Tốc độ cao
+- Độ trễ thấp
+
+#### Nhược điểm
+- Không reliable
+- Không đảm bảo thứ tự dữ liệu
 ### 3.2. Application Layer
+Application Layer là tầng cao nhất trong mô hình OSI, cung cấp giao diện giữa ứng dụng người dùng và hệ thống mạng.
+
 #### 3.2.1. Application, Presentation, and Session
+
+Trong mô hình OSI:
+
+| Layer | Chức năng |
+|---|---|
+| Application | Giao tiếp với ứng dụng |
+| Presentation | Mã hóa và định dạng dữ liệu |
+| Session | Quản lý phiên làm việc |
+
+Trong mô hình TCP/IP, ba tầng này thường được gộp chung thành Application Layer.
+
+#### Application Layer
+Cung cấp dịch vụ mạng cho người dùng:
+* web
+* email
+* file transfer
+
+#### Presentation Layer
+Xử lý:
+* encryption
+* compression
+* data formatting
+
+Ví dụ:
+* JPEG
+* PNG
+* TLS/SSL
+
+#### Session Layer
+Quản lý:
+* thiết lập session
+* duy trì session
+* kết thúc session
+
 #### 3.2.2. Peer-to-Peer
+Peer-to-Peer (P2P) là mô hình mạng mà các thiết bị vừa đóng vai trò client vừa là server.
+
+#### Đặc điểm
+* Không cần server trung tâm.
+* Chia sẻ tài nguyên trực tiếp.
+
+#### Ví dụ
+* BitTorrent
+* LAN file sharing
+
+#### Ưu điểm
+* Dễ triển khai
+* Tiết kiệm tài nguyên server
+
+#### Nhược điểm
+* Khó quản lý
+* Bảo mật thấp hơn
+
 #### 3.2.3. Web and Email Protocols
+#### Web Protocols
+
+##### HTTP
+* Port 80
+* Không mã hóa
+
+##### HTTPS
+* Port 443
+* Có mã hóa TLS/SSL
+
+#### Email Protocols
+
+| Protocol | Chức năng |
+|---|---|
+| SMTP | Gửi email |
+| POP3 | Nhận email và tải xuống |
+| IMAP | Đồng bộ email |
+
+#### Đặc điểm
+* SMTP dùng để gửi mail.
+* POP3 lưu mail trên thiết bị.
+* IMAP đồng bộ mail giữa nhiều thiết bị.
 #### 3.2.4. IP Addressing Services
+#### DHCP (Dynamic Host Configuration Protocol)
+
+DHCP tự động cấp:
+* IP address
+* subnet mask
+* default gateway
+* DNS server
+
+#### Quy trình DORA
+
+| Bước | Ý nghĩa |
+|---|---|
+| Discover | Client tìm DHCP server |
+| Offer | Server đề nghị IP |
+| Request | Client yêu cầu IP |
+| Acknowledge | Server xác nhận |
+
+#### DNS (Domain Name System)
+
+DNS chuyển đổi:
+```
+domain name ↔ IP address
+```
+
+Ví dụ:
+```
+google.com → 142.250.x.x
+```
+
+Nếu không có DNS thì người dùng cần phải ghi nhớ IP thủ công.
+
 #### 3.2.5. File Sharing Services
+#### FTP (File Transfer Protocol)
+
+* Port 21
+* Dùng để truyền file
+* Không mã hóa
+
+#### SFTP (SSH File Transfer Protocol)
+
+* Hoạt động qua SSH
+* An toàn hơn FTP
+
+#### SMB (Server Message Block)
+
+* Chia sẻ file trên Windows
+* Hỗ trợ printer sharing
+
+#### NFS (Network File System)
+
+* Chia sẻ file trên Linux/Unix
+* Cho phép truy cập file từ xa
+
+#### So sánh nhanh
+
+| Protocol | Bảo mật | Hệ điều hành phổ biến |
+|---|---|---|
+| FTP | Thấp | Đa nền tảng |
+| SFTP | Cao | Linux/Windows |
+| SMB | Trung bình | Windows |
+| NFS | Trung bình | Linux/Unix |
