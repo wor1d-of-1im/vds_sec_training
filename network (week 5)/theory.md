@@ -188,12 +188,242 @@ Mục tiêu -> tìm hiểu về:
 * subnetting dùng để chia mạng
 * ping/traceroute thực sự làm gì
 ### 2.1. Network Layer
-#### 2.1.1. Network Layer Characteristics
-#### 2.1.2. IPv4 Packet
-#### 2.1.3. IPv6 Packet
-#### 2.1.4. How a Host Routes
-#### 2.1.5. Router Routing Tables
+Network Layer là tầng thứ 3 trong mô hình OSI. Tầng này chịu trách nhiệm định tuyến (routing) và chuyển packet giữa các mạng khác nhau.
 
+#### 2.1.1. Network Layer Characteristics
+### Chức năng của Network Layer
+
+Network Layer thực hiện các chức năng chính:
+* Đánh địa chỉ logic bằng IP Address
+* Định tuyến packet
+* Chọn đường đi tốt nhất
+* Chuyển packet giữa các mạng
+* Fragmentation (IPv4)
+### Đơn vị dữ liệu
+
+| Layer | Đơn vị dữ liệu |
+|---|---|
+| Data Link Layer | Frame |
+| Network Layer | Packet |
+
+### Thiết bị hoạt động ở Layer 3
+
+| Thiết bị | Chức năng |
+|---|---|
+| Router | Định tuyến packet |
+| Layer 3 Switch | Switching + Routing |
+
+### Đặc điểm của Network Layer
+
+* Hoạt động độc lập với môi trường truyền dẫn
+* Sử dụng địa chỉ logic
+* Có khả năng liên kết nhiều mạng khác nhau
+* Hỗ trợ end-to-end communication
+
+### Protocol phổ biến
+
+| Protocol | Chức năng |
+|---|---|
+| IPv4 | Giao thức địa chỉ IPv4 |
+| IPv6 | Giao thức địa chỉ IPv6 |
+| ICMP | Báo lỗi và kiểm tra kết nối |
+#### 2.1.2. IPv4 Packet
+IPv4 là giao thức địa chỉ phổ biến nhất hiện nay, sử dụng địa chỉ 32 bit.
+
+### Ví dụ địa chỉ IPv4
+
+```text
+192.168.1.1
+```
+
+### Cấu trúc IPv4 Packet
+
+IPv4 Packet gồm:
+- Header
+- Data (Payload)
+
+### Các field quan trọng trong IPv4 Header
+
+| Field | Chức năng |
+|---|---|
+| Source IP Address | Địa chỉ IP nguồn |
+| Destination IP Address | Địa chỉ IP đích |
+| TTL | Giới hạn số hop |
+| Protocol | Xác định TCP/UDP/ICMP |
+| Header Checksum | Kiểm tra lỗi header |
+
+### TTL (Time To Live)
+
+TTL giúp ngăn packet chạy vòng lặp vô tận trong mạng.
+
+:contentReference[oaicite:1]{index=1}
+
+Mỗi lần packet đi qua router:
+- TTL giảm 1
+- TTL = 0 → packet bị hủy
+
+Internet mà không có TTL thì packet có thể chạy vòng quanh thế giới mãi mãi như deadline chưa làm xong của sinh viên IT.
+
+### Fragmentation
+
+Nếu packet quá lớn:
+- Router có thể chia packet thành nhiều mảnh nhỏ hơn.
+- Quá trình này gọi là fragmentation.
+
+### Hạn chế của IPv4
+
+- Không gian địa chỉ nhỏ
+- Thiếu IP Address
+- Phải sử dụng NAT
+#### 2.1.3. IPv6 Packet
+IPv6 được tạo ra để thay thế IPv4.
+
+IPv6 sử dụng địa chỉ 128 bit.
+
+:contentReference[oaicite:2]{index=2}
+
+### Ví dụ địa chỉ IPv6
+
+```text
+2001:0db8:85a3::8a2e:0370:7334
+```
+
+### Đặc điểm của IPv6
+
+- Không gian địa chỉ cực lớn
+- Hỗ trợ tự động cấu hình
+- Hiệu suất routing tốt hơn
+- Không cần NAT trong đa số trường hợp
+
+### IPv6 Packet Header
+
+IPv6 header đơn giản hơn IPv4.
+
+| Field | Chức năng |
+|---|---|
+| Source Address | Địa chỉ nguồn |
+| Destination Address | Địa chỉ đích |
+| Hop Limit | Giống TTL |
+| Next Header | Xác định protocol tiếp theo |
+
+### So sánh IPv4 và IPv6
+
+| Đặc điểm | IPv4 | IPv6 |
+|---|---|---|
+| Độ dài địa chỉ | 32 bit | 128 bit |
+| Biểu diễn | Decimal | Hexadecimal |
+| NAT | Thường dùng | Không cần |
+| Broadcast | Có | Không |
+#### 2.1.4. How a Host Routes
+Host quyết định cách gửi packet dựa trên:
+- IP Address
+- Subnet Mask
+- Default Gateway
+
+### Quá trình định tuyến của host
+
+#### Trường hợp 1: Cùng mạng
+
+Nếu IP đích cùng subnet:
+- Host gửi trực tiếp đến thiết bị đích.
+
+Ví dụ:
+
+```text
+PC1: 192.168.1.10/24
+PC2: 192.168.1.20/24
+```
+
+→ Gửi trực tiếp qua switch.
+
+---
+
+#### Trường hợp 2: Khác mạng
+
+Nếu IP đích khác subnet:
+- Host gửi packet đến Default Gateway.
+
+Ví dụ:
+
+```text
+PC1: 192.168.1.10/24
+Destination: 8.8.8.8
+Gateway: 192.168.1.1
+```
+
+→ Packet được gửi đến router.
+
+### Các bước hoạt động
+
+1. Host kiểm tra IP đích.
+2. So sánh subnet.
+3. Nếu cùng mạng → ARP tìm MAC đích.
+4. Nếu khác mạng → ARP tìm MAC của gateway.
+5. Gửi frame đến switch/router.
+
+### Vai trò của Default Gateway
+
+Default Gateway giúp host:
+- Gửi dữ liệu ra ngoài mạng LAN
+- Liên lạc với internet hoặc mạng khác
+#### 2.1.5. Router Routing Tables
+Routing Table là bảng chứa thông tin định tuyến mà router sử dụng để quyết định đường đi của packet.
+
+### Chức năng của Routing Table
+
+Router sử dụng routing table để:
+- Xác định đường đi tốt nhất
+- Chuyển packet đến next-hop phù hợp
+
+### Thành phần của Routing Table
+
+| Thành phần | Ý nghĩa |
+|---|---|
+| Destination Network | Mạng đích |
+| Next Hop | Router tiếp theo |
+| Outgoing Interface | Interface gửi packet |
+| Metric | Chi phí đường đi |
+
+### Các loại route
+
+| Loại Route | Ý nghĩa |
+|---|---|
+| Connected Route | Mạng kết nối trực tiếp |
+| Static Route | Route cấu hình thủ công |
+| Dynamic Route | Route học tự động |
+## Connected Route
+
+Connected Route xuất hiện khi:
+- Interface được cấu hình IP
+- Interface ở trạng thái up/up
+## Static Route
+
+Static Route do quản trị viên cấu hình thủ công.
+
+## Dynamic Routing
+
+Dynamic Routing sử dụng routing protocol để tự động trao đổi route.
+
+### Các protocol phổ biến
+
+| Protocol | Đặc điểm |
+|---|---|
+| RIP | Đơn giản |
+| OSPF | Nhanh và phổ biến |
+| EIGRP | Cisco proprietary |
+| BGP | Routing internet |
+
+## Default Route
+
+Default Route được sử dụng khi:
+- Router không biết đường đi cụ thể.
+
+
+### Ví dụ cấu hình
+
+```bash
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+```
 ### 2.2. IPv4 Addressing
 #### 2.2.1. IPv4 Address Structure
 IPv4 address là địa chỉ logic dùng để định danh thiết bị trong mạng Layer 3.
