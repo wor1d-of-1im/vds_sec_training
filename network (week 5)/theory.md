@@ -709,11 +709,236 @@ Core layer là xương sống của hệ thống mạng.
 * Easy management
 * Scalable
 ### 2.3. Basic Router Configuration
+Basic Router Configuration là quá trình cấu hình ban đầu cho router để thiết bị có thể hoạt động trong mạng. Các cấu hình cơ bản thường bao gồm:
+* Đặt hostname
+* Đặt mật khẩu
+* Cấu hình interface
+* Cấu hình default gateway
+* Lưu cấu hình
 #### 2.3.1. Configure Initial Router Settings
+### Truy cập router
+
+Thông thường router Cisco được cấu hình qua:
+* Console
+* SSH
+* Telnet
+
+### Các chế độ CLI của Cisco IOS
+
+| Chế độ | Ký hiệu |
+|---|---|
+| User EXEC Mode | `Router>` |
+| Privileged EXEC Mode | `Router#` |
+| Global Configuration Mode | `Router(config)#` |
+
+### Các bước cấu hình cơ bản
+
+#### 1. Vào privileged mode
+```
+enable
+```
+
+#### 2. Vào global configuration mode
+
+```
+configure terminal
+```
+
+#### 3. Đặt hostname
+
+```
+hostname R1
+```
+
+#### 4. Đặt mật khẩu enable
+
+```
+enable secret class
+```
+
+#### 5. Đặt mật khẩu console
+
+```
+line console 0
+password cisco
+login
+```
+
+#### 6. Mã hóa mật khẩu
+
+```
+service password-encryption
+```
+
+#### 7. Cấu hình banner
+
+```
+banner motd # Unauthorized access prohibited #
+```
+
+#### 8. Lưu cấu hình
+
+```
+copy running-config startup-config
+```
+
+### Một số lệnh kiểm tra
+
+| Lệnh | Chức năng |
+|---|---|
+| `show running-config` | Xem cấu hình hiện tại |
+| `show startup-config` | Xem cấu hình đã lưu |
+| `show ip interface brief` | Xem trạng thái interface |
+
 #### 2.3.2. Configure Interfaces
+Router sử dụng interface để kết nối với các mạng khác nhau.
+
+### Các bước cấu hình interface
+
+#### 1. Chọn interface
+
+```
+interface gigabitethernet 0/0
+```
+
+#### 2. Gán IP address
+
+```
+ip address 192.168.1.1 255.255.255.0
+```
+
+#### 3. Bật interface
+
+```
+no shutdown
+```
+
+### Ví dụ hoàn chỉnh
+
+```
+Router(config)# interface g0/0
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# no shutdown
+```
+### Kiểm tra interface
+
+```
+show ip interface brief
+```
+
+### Trạng thái interface
+
+| Trạng thái | Ý nghĩa |
+|---|---|
+| up/up | Hoạt động bình thường |
+| administratively down | Bị shutdown bằng lệnh |
+| down/down | Không có kết nối vật lý |
+
+### Cấu hình nhiều interface
+
+```
+interface g0/1
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+```
+
 #### 2.3.3. Configure the Default Gateway
+
+Default Gateway là địa chỉ router mà host hoặc thiết bị sử dụng để gửi dữ liệu ra ngoài mạng nội bộ.
+
+### Vai trò của Default Gateway
+
+Khi host muốn gửi dữ liệu:
+* Nếu IP đích cùng subnet → gửi trực tiếp
+* Nếu khác subnet → gửi đến default gateway
+
+### Ví dụ
+
+PC:
+```
+IP Address: 192.168.1.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.1.1
+```
+
+Nếu gửi đến:
+```
+8.8.8.8
+```
+
+→ Host sẽ gửi packet đến router `192.168.1.1`.
+
+---
+
+### Cấu hình Default Gateway trên switch Layer 2
+
+```
+ip default-gateway 192.168.1.1
+```
+
+### Cấu hình Default Route trên router
+
+```
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+```
+
+### Giải thích
+
+| Thành phần | Ý nghĩa |
+|---|---|
+| `0.0.0.0 0.0.0.0` | Mọi mạng đích |
+| `10.0.0.1` | Next-hop router |
+
+### Kiểm tra routing table
+
+```
+show ip route
+```
+
+Default route thường xuất hiện dưới ký hiệu:
+
+```
+S* 0.0.0.0/0
+```
+
 ### 2.4. ICMP
-ICMP messages
+ICMP (Internet Control Message Protocol) là giao thức dùng để gửi thông báo lỗi và thông tin điều khiển trong mạng IP.
+
+ICMP không dùng để truyền dữ liệu ứng dụng như TCP hay UDP. Nó chủ yếu phục vụ việc:
+* Kiểm tra kết nối
+* Báo lỗi
+* Chẩn đoán mạng
+#### ICMP messages
+ICMP sử dụng nhiều loại message khác nhau để hỗ trợ hoạt động mạng.
+
+### Các loại ICMP message phổ biến
+
+| ICMP Message | Chức năng |
+|---|---|
+| Echo Request | Gửi yêu cầu ping |
+| Echo Reply | Trả lời ping |
+| Destination Unreachable | Không thể tới đích |
+| Time Exceeded | TTL hết hạn |
+| Redirect | Đề xuất đường đi tốt hơn |
+
+---
+
+## Ping
+
+Lệnh `ping` sử dụng ICMP Echo Request và Echo Reply để kiểm tra kết nối mạng.
+
+### Ví dụ
+
+```
+ping 8.8.8.8
+```
+
+### Quá trình ping
+
+1. Host gửi ICMP Echo Request.
+2. Thiết bị đích trả lời Echo Reply.
+3. Nếu nhận phản hồi → kết nối hoạt động.
+
 ## 3. Transport & Services
 Mục tiêu -> tìm hiểu về:
 * trình duyệt/web/game hoạt động thế nào
