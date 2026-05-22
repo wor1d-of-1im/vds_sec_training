@@ -16,14 +16,7 @@ chức năng:
 Hai lớp con của Data Link Layer:
   * Logical Link Control (LLC): là lớp con điều khiển liên kết logic, có trách nhiệm giao tiếp với các tầng mạng phía trên, xác định các giao thức lớp mạng sử dụng, đồng thời quản lý kiểm soát lỗi hay luồng dữ liệu.
   * Media Access Control (MAC): là lớp con điều khiển truy cập đường truyền, chịu trách nhiệm tương tác qua lớp physical (lớp 1) chịu trách nhiệm quản lý thời điểm + cách thức truy cập của thiết bị phép truy cập để tránh xung đột.
-#### 1.1.2. Topologies
-  * Xét theo vật lý:
-    * Bus
-    * Ring
-    * Star
-    * Mesh
-  * Xét theo logic:
-#### 1.1.3. Data Link Frame
+
 ### 1.2. Ethernet Switching
 #### 1.2.1. Ethernet Frame
   * Preamble (7 bytes): đồng bộ hóa bit giữa bên gửi và bên nhận
