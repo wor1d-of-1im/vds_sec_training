@@ -5,7 +5,8 @@ Mục tiêu -> tìm hiểu về:
 * switch chuyển frame kiểu gì
 * IP biến thành MAC thế nào
 ### 1.1. Data Link Layer
-#### 1.1.1. Tổng quan về Data Link Layer
+Tổng quan về Data Link Layer:
+
 Là tầng thứ 2 trong mô hình OSI, mang
 chức năng:
   * Đóng khung (Framing): Chia luồng bit dữ liệu từ tầng Vật lý thành các khối dễ quản lý gọi là Frame.
